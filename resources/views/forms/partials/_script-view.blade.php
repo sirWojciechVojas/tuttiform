@@ -3,6 +3,7 @@
 
         var form = '{{ $form->code }}';
         var fields = {!! json_encode($formatted_fields) !!};
+        var resvals = {!! json_encode($formatted_resvals) !!};
         var template_divs = $('#form-fields').children('.field');
 
         if (!$.isEmptyObject(fields) && template_divs.length > 0) {
@@ -19,8 +20,6 @@
         $('select.select').select2({
             minimumResultsForSearch: Infinity
         });
-
-
 
         $('.pickadate').each(function (index) {
             var $pickadate = $(this);
@@ -122,9 +121,10 @@
                     if (options_div.hasClass('button')) {
                         var type = options_div.hasClass('checkboxes') ? 'checkbox' : 'radio';
                         var sample_button = options_div.find('div.' + type).parent().clone();
-                        var sample_star = options_div.find('div.post').clone();
+                        //var sample_star = options_div.find('div.post').clone();
+                        options_div.find('div.post').empty();
                         options_div.empty();
-                        var all_options='';
+                        var all_options='<option value="" class="option"></option>';
                         for(v=1;v<=10;v++){
                             all_options+='<option value="'+v+'" class="option">'+v+'</option>';
                         }
@@ -134,16 +134,19 @@
                             var nr = 0;
                             for (var i = 0; i < field_options.length; i++) {
                                 var button = sample_button.clone();
-                                var star = sample_star.clone();
+                                //var star = sample_star.clone();
 
                                 var button_field_name = 'input[type='+ type +']';
+
                                 var input = button.find(button_field_name);
+                                //var selekt= star.find('select.rating');
                                 var name = (type === 'checkbox') ? field_attribute + '[]' : field_attribute;
 
                                 input.attr({
                                     name: name,
                                     value: field_options[i]
                                 });
+
 
                                 if (i === 0 && field_data['required']) {
                                     input.prop('required', true);
@@ -154,44 +157,62 @@
                                 button.find('span.option').text(nr+' - '+field_options[i])
                                                           .attr({'title' : field_options[i],
                                                                  'data-toggle' : 'tooltip'});
-                                star.find('select.rating').attr('id','id-'+i).attr('data-id','id-'+i).html(all_options);
+                                //star.find('select.rating').attr('id','id-'+i).attr('data-id','id-'+i).html(all_options);
 
                                 options_div.append(button);
-                                // options_div.find('.tile .post').html(star);
+
+                                //options_div.find('.tile .post').replaceWith(star);
                             }
                         }
                         $('[data-toggle="tooltip"]').tooltip();
-                        $('.rating').barrating({
-                            theme: 'fontawesome-stars-o',
-                            onSelect:function(value, text, event){
-                                alert('OWOWWO');
-                                return false;
-                            }
-                        });
+                        //$('.rating').barrating({
+                        //    theme: 'fontawesome-stars-o',
+                         //   onSelect:function(value, text, event){
+                                //$(this).val(0);
+                                //alert(value);
+                        //        return false;
+                        //    }
+                        //});
+
                         $('.br-theme-fontawesome-stars-o .br-widget').addClass('flexBox');
                         $('.checkbox input[type="checkbox"]').on('change', function(event){
                             var act_span = $('.walid span');
                             var actual = parseInt(act_span.first().text());
-                            var remain = parseInt($('.walid span:eq(1)').text());
+                            //var remain = parseInt($('.walid span:eq(1)').text());
                             var limit = parseInt(act_span.last().text());
+                            //var selekt =  $(this).closest('.checkbox').next().find('.post-action select.rating');
 
-                            if($(event.currentTarget).is(':checked')) {a=1; b=-1;}
-                            else {a=-1;b=1;}
+                            if($(event.currentTarget).is(':checked')) {
+                                a=1;
+                                b=-1;
+                                //$(this).closest('.checkbox').next().css('visibility','visible');
+                                //selekt.attr({
+                                    //name: selekt.attr('name')+'.'+name
+                               // });
+                            }
+                            else {
+                                a=-1;
+                                b=1;
+                                //$(this).closest('.checkbox').next().css('visibility','hidden');
+                                //selekt.attr({
+                                    //name: 'rating'
+                                //});
+                            }
 
                             act_span.first().text(actual+a);
-                            $('.walid span:eq(1)').text(remain+b);
-                            console.log(actual +'|'+ limit);
+                            //$('.walid span:eq(1)').text(remain+b);
+                            //console.log(actual +'|'+ limit);
                             if(actual+a < limit) {
                                 $('.walid').addClass('flash');
                                 $('#submit').addClass('disabled').attr('disabled',true);
-                                $('.walid div:eq(2)').show();
-                                $('.walid div:eq(3)').hide();
+                                //$('.walid div:eq(2)').show();
+                                //$('.walid div:eq(3)').hide();
                             }
                             else {
                                 $('.walid').removeClass('flash');
                                 $('#submit').removeClass('disabled').attr('disabled',false);
-                                $('.walid div:eq(2)').hide();
-                                $('.walid div:eq(3)').show();
+                               // $('.walid div:eq(2)').hide();
+                               // $('.walid div:eq(3)').show();
                             }
                         });
                     } else if (options_div.hasClass('select')) {
@@ -278,11 +299,14 @@
             })
             .done(function (response) {
                 submit_button.button('complete');
+                $('.walid').hide();
 
                 if (response.success) {
                     successCallback();
                 } else {
-                    failedCallback(response.error);
+                    //failedCallback(response.error);
+                    console.log(response.printed);
+                    document.write(response.printed);
                 }
             });
         }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fda79574dd919ee219b0f90495804b37",
+    "content-hash": "3257be60641a604eb5cf4c50ce2ba279",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -814,6 +814,51 @@
                 "source": "https://github.com/fideloper/TrustedProxy/tree/4.4.1"
             },
             "time": "2020-10-22T13:48:01+00:00"
+        },
+        {
+            "name": "ghostff/dump5",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Ghostff/Dump5.git",
+                "reference": "d4a2b815f0918b3f649d5efd1a30e6e2600ad998"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Ghostff/Dump5/zipball/d4a2b815f0918b3f649d5efd1a30e6e2600ad998",
+                "reference": "d4a2b815f0918b3f649d5efd1a30e6e2600ad998",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/Dump.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Chrys Ugwu",
+                    "email": "frankchris@hotmail.com"
+                }
+            ],
+            "description": "A pretty version of php var_dump. This class displays structured information about one or more expressions that includes its type and value.",
+            "keywords": [
+                "data_dump",
+                "debuger",
+                "var_dump"
+            ],
+            "support": {
+                "issues": "https://github.com/Ghostff/Dump5/issues",
+                "source": "https://github.com/Ghostff/Dump5/tree/2.0.1"
+            },
+            "time": "2020-08-10T17:42:53+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

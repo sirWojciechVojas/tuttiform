@@ -2,6 +2,7 @@
     $(function() {
         var form = '{{ $form->code }}';
         var fields = {!! json_encode($formatted_fields) !!};
+        var resvals = {!! json_encode($formatted_resvals) !!};
 
         // Form questions
         var $questions = $('form .questions');
@@ -71,6 +72,7 @@
         function instantiateFormTemplateWithData(form, response) {
             var result = response.data;
             var template = $(result.sub_template);
+            console.log(form);
 
             template.find('input.question-name').attr({
                 name: result.attribute + '.question',
@@ -248,7 +250,6 @@
                 var field_attribute = $(this).data('attribute');
                 var field_data = fields[field_attribute];
                 var template = $(this).find('.template');
-                console.log(field_data);
 
                 template.find('input.question-name').attr({
                     name: field_data['attribute'] + '.question',
@@ -320,6 +321,14 @@
                             value: first_option
                         });
 
+                        if(resvals[field_data.id] !== undefined){
+                            $('input.switchery:first-of-type').trigger('change');
+                            $('.checkbox-switchery:first-of-type').trigger('click');
+                            $('#ResVal select[name="sel_type"]').val(resvals[field_data.id].sel_type).change();
+                            $('#ResVal input[name="field_limit"]').val(resvals[field_data.id].field_limit);
+                            $('#ResVal input[name="custom_text"]').val(resvals[field_data.id].custom_text);
+                        }
+
                         if (field_options !== null && field_options.length > 0) {
                             for (var i = 0; i < field_options.length; i++) {
                                 var options_wrapper = template.find('div.options-wrapper');
@@ -377,6 +386,7 @@
                     successCallback($form);
                 } else {
                     // failedCallback(response.error);
+                    console.log(response.printed);
                     document.write(response.printed);
                 }
             });
@@ -392,7 +402,7 @@
         $('select.select').select2({
             minimumResultsForSearch: Infinity
         });
-        $('input.switchery:first-of-type').on('change', function(){
+        $('input.switchery.question-resval').on('change', function(){
             if($(this).prop('checked')) $(this).closest('.panel-footer').prev().find('#ResVal').show();
             else $(this).closest('.panel-footer').prev().find('#ResVal').hide();
         });

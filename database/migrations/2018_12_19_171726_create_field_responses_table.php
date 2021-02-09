@@ -18,10 +18,13 @@ class CreateFieldResponsesTable extends Migration
             $table->unsignedInteger('form_field_id');
             $table->unsignedInteger('form_response_id');
             $table->text('answer')->nullable();
+            $table->text('rating')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
-
+    //     Schema::table('field_responses', function (Blueprint $table) {
+    //         $table->text('rating')->nullable()->after('answer');
+    //    });
         Schema::table('field_responses', function (Blueprint $table) {
             $table->foreign('form_field_id')->references('id')->on('form_fields')->onDelete('cascade');
             $table->foreign('form_response_id')->references('id')->on('form_responses')->onDelete('cascade');

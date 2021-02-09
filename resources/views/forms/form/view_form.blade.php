@@ -4,6 +4,9 @@ $page = $form->title;
 $module = ($view_type === 'preview') ? 'My Form' : config('app.name');
 
 $fields = $form->fields()->filled()->get();
+$resvals = $form->resvals;
+
+
 @endphp
 
 @section('title', "{$module} | {$page}")
@@ -28,7 +31,7 @@ $fields = $form->fields()->filled()->get();
                 </div>
 
                 <div class="panel-body">
-                    <form id="user-form" action="{{ ($view_type === 'form') ? route('forms.responses.store', $form->code) : "#" }}" method="{{ ($view_type === 'form') ? "post" : "get" }}" autocomplete="off">
+                    <form id="user-form" action="{{ ($view_type === 'form') ? route('forms.responses.store', $form->code) : '#' }}" method="{{ ($view_type === 'form') ? "post" : "get" }}" autocomplete="off">
                         @if ($view_type === 'form') @csrf @endif
                         <div id="form-fields" class="mt-15 mb-15">
                             @php $formatted_fields = []; @endphp
@@ -46,6 +49,14 @@ $fields = $form->fields()->filled()->get();
                                         $only_attributes = ['attribute', 'template', 'question', 'required', 'options'];
                                         $formatted_fields[$field->attribute] = $field->only($only_attributes);
                                     @endphp
+                                    @if (explode('.', $field->attribute)[0]=='checkboxes')
+                                        @foreach ($resvals as $resval)
+                                            @php
+                                                $only_att_resvals = ['sel_type', 'field_limit', 'custom_text'];
+                                                $formatted_resvals[$resval->form_field_id] = $resval->only($only_att_resvals);
+                                            @endphp
+                                        @endforeach
+                                    @endif
                                 @endforeach
                             @endif
                         </div>
@@ -63,9 +74,9 @@ $fields = $form->fields()->filled()->get();
 <div class="row walid vcenter">
     <div class="col-md-7">
         <div>Zaznaczono: <span>0</span> utworów</div>
-        <div>Pozostało: <span>5</span> utworów</div>
+        <div>Pozostało: <span>{{ $formatted_resvals[$resval->form_field_id]['field_limit'] }}</span> utworów</div>
         <div>Warunek spełniony</div>
-        <div>Musisz zaznaczyć <span>5</span> utworów!</div>
+        <div>{{ $formatted_resvals[$resval->form_field_id]['custom_text'] }} <span>{{ $formatted_resvals[$resval->form_field_id]['field_limit'] }}</span></div>
     </div>
 </div>
 @endsection

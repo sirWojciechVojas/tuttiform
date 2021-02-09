@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Form;
 
 use Auth;
 use App\Form;
+use App\FormField;
+use App\FormResval;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Doctrine\DBAL\Types\ObjectType;
 
 class FormController extends Controller
 {
@@ -76,7 +79,7 @@ class FormController extends Controller
         $not_allowed = ($form->user_id !== $current_user->id && !$current_user->isFormCollaborator($form->id));
         abort_if($not_allowed, 404);
 
-        $form->load('fields', 'collaborationUsers', 'availability');
+        $form->load('fields', 'collaborationUsers', 'availability', 'resvals');
 
         return view('forms.form.show', compact('form'));
     }
@@ -111,8 +114,10 @@ class FormController extends Controller
     public function draftForm(Request $request, $form)
     {
         if ($request->ajax()) {
-            $form = Form::where('code', $form)->with('fields')->first();
 
+
+            // $wiw = $form;
+            $form = Form::where('code', $form)->with('fields')->first();
             if (!$form) {
                 return response()->json([
                     'success' => false,
@@ -135,15 +140,6 @@ class FormController extends Controller
             $inputs_ = [];
             $a=0;
             $is_invalid_request = false;
-            // $inputs_=$request->except('_token');
-
-
-            // return response()->json([
-            //     'success' => false,
-            //     'error_message' => 'validation_failed',
-            //     'printed' =>  '<pre>'.var_export($request->except('_token'),true).'</pre>'
-            //     // 'error' =>  implode(',',$extra)
-            // ]);
 
             foreach ($request->except('_token') as $key => $value) {
                 $extra[] = $value;
@@ -181,9 +177,10 @@ class FormController extends Controller
                     $new_key = "{$template}.{$unique_key}.{$field}";
                     // $inputs_res[] = $field;
                     // $inputs_ = array_add($inputs_, $new_key , $value);
-                    $inputs_[] = $key_parts;
+                    $inputs_[$key] = $value;
                 }
             }
+
 
             if ($is_invalid_request) {
                 return response()->json([
@@ -225,26 +222,40 @@ class FormController extends Controller
                 $field->question = ucfirst(data_get($inputs, "{$field->attribute}.question"));
                 // $field->question = 'Dupa blada?';
                 $field->required = data_get($inputs, "{$field->attribute}.required") ? true : false;
-                // $field->options = data_get($inputs, "{$field->attribute}.options");
-                $field->options = data_get($inputs_, "{$field->attribute}.type");
+                $field->options = data_get($inputs, "{$field->attribute}.options");
+                // $field->options = data_get($inputs_, "{$field->attribute}.type");
                 $field->filled = true;
-                $extra2[]=$inputs_;
                 $field->save();
+            }
+
+            //Response Value wprowdzone przez sWV - powyżej odpowiednio sporządzona zmienna $inputs_
+            $checkval = data_get($inputs, "{$field->attribute}.resval");
+            if($checkval=='on'){
+                $resval = FormResval::where('form_field_id',$field->id)->first();
+                if(!$resval){
+                    $resval = new FormResval();
+                    $resval->form_field_id = $field->id;
+                }
+                $resval->form_id = $form->id;
+                foreach($inputs_ as $k => $v){
+                    $resval->{$k} = $v;
+                }
+                $resval->save();
             }
 
             ($form->status === Form::STATUS_DRAFT) and $form->status = Form::STATUS_PENDING;
             $form->save();
 
-            // return response()->json([
-            //     'success' => true,
-            // ]);
-            // $extra = implode(',',$extra);
             return response()->json([
-                'success' => false,
-                'error_message' => 'validation_failed',
-                // 'error' =>  'Invalid request made. Please refresh the page'
-                'printed' =>  var_export($extra2, true)
+                'success' => true,
             ]);
+
+            // return response()->json([
+            //     'success' => false,
+            //     'error_message' => 'validation_failed',
+            //     // 'error' =>  'Invalid request made. Please refresh the page'
+            //     'printed' =>  $form->id
+            // ]);
         }
     }
 

@@ -48,6 +48,7 @@ Route::middleware(['auth', 'verified'])->namespace('Form')->group(function () {
     //Form Routes
     Route::get('forms', 'FormController@index')->name('forms.index');
     Route::get('forms/create', 'FormController@create')->name('forms.create');
+    Route::get('forms/vojas', 'FormController@vojas')->name('forms.vojas'); //moje swv
     Route::post('forms', 'FormController@store')->name('forms.store');
     Route::get('forms/{form}', 'FormController@show')->name('forms.show');
     Route::get('forms/{form}/edit', 'FormController@edit')->name('forms.edit');

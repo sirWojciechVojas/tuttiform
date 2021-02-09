@@ -5,6 +5,7 @@
     ];
 
     $fields = $form->fields;
+    $resvals = $form->resvals;
 
     $current_user = auth()->user();
 @endphp
@@ -41,7 +42,7 @@
         <form id="create-form" action="{{ route('forms.draft', $form->code) }}" method="post" autocomplete="off">
             @csrf
             <div class="questions">
-                @php $formatted_fields = []; @endphp
+                @php $formatted_fields = []; $formatted_resvals = []; @endphp
                 @if ($fields->count())
                     @foreach ($fields as $field)
                         <div class="filled" data-id="{{ $field->id }}" data-attribute="{{ $field->attribute }}">
@@ -49,10 +50,18 @@
                             {!! $template['sub_template'] !!}
                         </div>
                         @php
-                            $only_attributes = ['attribute', 'template', 'question', 'required', 'options', 'resval'];
+                            $only_attributes = ['id', 'form_id', 'attribute', 'template', 'question', 'required', 'options'];
                             ($template['attribute_type'] === 'array') and array_push($only_attributes, 'options');
                             $formatted_fields[$field->attribute] = $field->only($only_attributes);
                         @endphp
+                        @if (explode('.', $field->attribute)[0]=='checkboxes')
+                            @foreach ($resvals as $resval)
+                                @php
+                                    $only_att_resvals = ['sel_type', 'field_limit', 'custom_text'];
+                                    $formatted_resvals[$resval->form_field_id] = $resval->only($only_att_resvals);
+                                @endphp
+                            @endforeach
+                        @endif
                     @endforeach
                 @endif
             </div>

@@ -41,6 +41,11 @@ class Form extends Model
         return $this->hasMany(FormField::class);
     }
 
+    public function resvals()
+    {
+        return $this->hasMany(FormResval::class);
+    }
+
     public function responses()
     {
         return $this->hasMany(FormResponse::class);

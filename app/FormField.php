@@ -18,6 +18,7 @@ class FormField extends Model
         'required' => 'boolean',
         'filled' => 'boolean',
         'options' => 'array',
+        'rating' => 'array',
     ];
 
     protected $cascadeDeletes = ['responses'];
@@ -35,6 +36,11 @@ class FormField extends Model
     public function responses()
     {
         return $this->hasMany(FieldResponse::class);
+    }
+
+    public function resvals()
+    {
+        return $this->hasMany(FormResval::class);
     }
 
     public function getResponseSummaryDataForChart()
@@ -57,17 +63,25 @@ class FormField extends Model
                 $data[] = ($this->template == 'drop-down')
                     ? ['Option', 'No. of option selected']
                     : ['Choice', 'No. of choice selected'];
-
+                $a=0;
                 foreach ($this->options as $option) {
                     if ($this->template == 'checkboxes') {
                         $option_selected_count = $responses->filter(function ($v, $k) use ($option) {
                             $value = (array) json_decode($v->answer);
                             return in_array($option, $value);
                         })->count();
+
+                        // foreach($option_selected_count as $key => $val){
+                        //      if($val==1) {$rating[$key] = $responses->pluck('rating')[0][$a]; $a++; }
+                        //      else $rating[$key]=null;
+                        // }
+                        // var_dump($option_selected_count);
+
                     } else {
                         $option_selected_count = $responses->where('answer', $option)->count();
                     }
 
+                    // array_push($data, [$option, $rating]);
                     array_push($data, [$option, $option_selected_count]);
 
                 }

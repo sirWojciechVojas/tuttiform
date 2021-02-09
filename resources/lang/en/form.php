@@ -240,9 +240,28 @@ $checkboxes_main_template = <<<MAIN_TEMPLATE
                                 <input type="checkbox" class="styled" name=""> <span class="option">Option 1</span>
                             </label>
                         </div>
-                        <div class="post mt-15 mb-15 col-md-12"">
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+MAIN_TEMPLATE;
+
+$songs_main_template = <<<MAIN_TEMPLATE
+	<div class="row template checkboxes">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label for="" class="label-xlg field-label"><span class="question">Checkbox Question:</span></label>
+                <div class="options button checkboxes">
+                    <div class="tile col-xs-12 col-md-6 col-lg-4 p-1">
+                        <div class="checkbox mt-15 mb-15 col-md-12">
+                            <label>
+                                <input type="checkbox" class="styled" name=""> <span class="option">Option 1</span>
+                            </label>
+                        </div>
+                        <div class="post mt-15 mb-15 col-md-12" style="visibility:hidden;">
                             <div class="post-action">
-                                <select id="" data-id="" name="rating[]" class="rating">
+                                <select id="" data-id="" name="rating" class="rating">
                                     <option value="1" class="option">1</option>
                                     <option value="2" class="option">2</option>
                                     <option value="3" class="option">3</option>

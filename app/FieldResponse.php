@@ -11,7 +11,7 @@ class FieldResponse extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'form_field_id', 'form_response_id', 'answer',
+        'form_field_id', 'form_response_id', 'answer', 'rating'
     ];
 
     public function formField()
