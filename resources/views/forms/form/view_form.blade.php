@@ -53,6 +53,7 @@ $resvals = $form->resvals;
                                         @foreach ($resvals as $resval)
                                             @php
                                                 $only_att_resvals = ['sel_type', 'field_limit', 'custom_text'];
+                                                $ffid=$resval->form_field_id;
                                                 $formatted_resvals[$resval->form_field_id] = $resval->only($only_att_resvals);
                                             @endphp
                                         @endforeach
@@ -74,7 +75,7 @@ $resvals = $form->resvals;
 <div class="row walid vcenter">
     <div class="col-md-7">
         <div>Zaznaczono: <span>0</span> utworów</div>
-        <div>Pozostało: <span>{{ $formatted_resvals[$resval->form_field_id]['field_limit'] }}</span> utworów</div>
+        <div>Pozostało: <span>{{ $formatted_resvals[$resval->form_field_id]['field_limit'] }}<input type="hidden" value="{{ $formatted_resvals[$resval->form_field_id]['field_limit'] }}"/></span> utworów</div>
         <div>Warunek spełniony</div>
         <div>{{ $formatted_resvals[$resval->form_field_id]['custom_text'] }} <span>{{ $formatted_resvals[$resval->form_field_id]['field_limit'] }}</span></div>
     </div>

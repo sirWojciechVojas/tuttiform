@@ -68,18 +68,11 @@ function drawColumnChart(chart_data) {
 // Draw horizontal bar chart
 function drawBarChart(chart_data) {
     var data = google.visualization.arrayToDataTable(chart_data.data);
-    // set inner height to 30 pixels per row
-    var chartAreaHeight = data.getNumberOfRows() * 30;
-// add padding to outer height to accomodate title, axis labels, etc
-    var chartHeight = chartAreaHeight + 80;
+
     var options_bar = {
         fontName: 'Roboto',
-        height: chartHeight,
-        chartArea: {
-            height: chartAreaHeight
-        },
-        fontSize: 10,
-        bar: { groupWidth: "90%" },
+        height: 400,
+        fontSize: 12,
         tooltip: {
             textStyle: {
                 fontName: 'Roboto',
@@ -89,7 +82,7 @@ function drawBarChart(chart_data) {
         vAxis: {
             gridlines: {
                 color: '#e5e5e5',
-                count: 1
+                count: 10
             },
         },
         legend: {
@@ -102,7 +95,6 @@ function drawBarChart(chart_data) {
     };
 
     var container_element = $('#' + chart_data.name)[0];
-    // console.log(container_element);
     var bar = new google.visualization.BarChart(container_element);
     bar.draw(data, options_bar);
 }

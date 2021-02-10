@@ -23,9 +23,9 @@
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     {{-- <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet"> --}}
-    <link href="{{ asset('assets/css/themes/css-stars.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/themes/bootstrap-stars.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/themes/fontawesome-stars-o.css') }}" rel="stylesheet">
+    {{--  <link href="{{ asset('assets/css/themes/css-stars.css') }}" rel="stylesheet">  --}}
+    {{--  <link href="{{ asset('assets/css/themes/bootstrap-stars.css') }}" rel="stylesheet">  --}}
+    {{--  <link href="{{ asset('assets/css/themes/fontawesome-stars-o.css') }}" rel="stylesheet">  --}}
     <link href="{{ asset('assets/css/starrating.css') }}" rel="stylesheet">
     @yield('plugin-css')
     <!-- /global stylesheets -->
@@ -66,9 +66,9 @@
     <!-- Core JS files -->
     <script src="{{ asset('assets/js/plugins/pace.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/libraries/jquery.min.js') }}"></script>
-    {{-- <script src="{{ asset('assets/js/core/libraries/jquery-ui.min.js') }}"></script> --}}
+    {{--  <script src="{{ asset('assets/js/core/libraries/jquery-ui.min.js') }}"></script>  --}}
     <script src="{{ asset('assets/js/core/libraries/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugins/blockui.min.js') }}"></script>
+    {{--  <script src="{{ asset('assets/js/plugins/blockui.min.js') }}"></script>  --}}
     <!-- /core JS files -->
 
     <!-- Theme JS files -->

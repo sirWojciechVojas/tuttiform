@@ -234,8 +234,8 @@ $checkboxes_main_template = <<<MAIN_TEMPLATE
 			<div class="form-group">
 				<label for="" class="label-xlg field-label"><span class="question">Checkbox Question:</span></label>
                 <div class="options button checkboxes">
-                    <div class="tile col-xs-12 col-md-6 col-lg-4 p-1">
-                        <div class="checkbox mt-15 mb-15 col-md-12">
+                    <div class="tile vcenter col-sm-12 col-md-6 col-lg-4 p-1">
+                        <div class="checkbox vcenter col-md-12">
                             <label>
                                 <input type="checkbox" class="styled" name=""> <span class="option">Option 1</span>
                             </label>

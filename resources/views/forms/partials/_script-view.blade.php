@@ -3,7 +3,7 @@
 
         var form = '{{ $form->code }}';
         var fields = {!! json_encode($formatted_fields) !!};
-        var resvals = {!! json_encode($formatted_resvals) !!};
+        var resvals = {!! json_encode($formatted_resvals[$ffid]) !!};
         var template_divs = $('#form-fields').children('.field');
 
         if (!$.isEmptyObject(fields) && template_divs.length > 0) {
@@ -124,10 +124,12 @@
                         //var sample_star = options_div.find('div.post').clone();
                         options_div.find('div.post').empty();
                         options_div.empty();
+                        /*
                         var all_options='<option value="" class="option"></option>';
                         for(v=1;v<=10;v++){
                             all_options+='<option value="'+v+'" class="option">'+v+'</option>';
                         }
+                        */
 
                         if (field_data['options'] !== null) {
                             var field_options = field_data['options'];
@@ -154,9 +156,10 @@
                                 }
                                 nr = i+1;
 
-                                button.find('span.option').text(nr+' - '+field_options[i])
+                                button.find('span.option').text(field_options[i])
                                                           .attr({'title' : field_options[i],
-                                                                 'data-toggle' : 'tooltip'});
+                                                                 'data-toggle' : 'tooltip'
+                                                                });
                                 //star.find('select.rating').attr('id','id-'+i).attr('data-id','id-'+i).html(all_options);
 
                                 options_div.append(button);
@@ -164,7 +167,7 @@
                                 //options_div.find('.tile .post').replaceWith(star);
                             }
                         }
-                        $('[data-toggle="tooltip"]').tooltip();
+                        //$('[data-toggle="tooltip"]').tooltip({ boundary: 'window' });
                         //$('.rating').barrating({
                         //    theme: 'fontawesome-stars-o',
                          //   onSelect:function(value, text, event){
@@ -178,7 +181,8 @@
                         $('.checkbox input[type="checkbox"]').on('change', function(event){
                             var act_span = $('.walid span');
                             var actual = parseInt(act_span.first().text());
-                            //var remain = parseInt($('.walid span:eq(1)').text());
+
+                            var remain = parseInt($('.walid span:eq(1) input').val());
                             var limit = parseInt(act_span.last().text());
                             //var selekt =  $(this).closest('.checkbox').next().find('.post-action select.rating');
 
@@ -198,19 +202,54 @@
                                     //name: 'rating'
                                 //});
                             }
-
+                            if(Math.abs(remain+b)==1) var song = ' utwór';
+                            else if(Math.abs(remain+b)>1 && Math.abs(remain+b)<5) var song = ' utwory';
+                            else if(Math.abs(remain+b)>10 && Math.abs(remain+b)<21) var song = ' utworów';
+                            else if(Math.abs(remain+b)>21){
+                                if(Math.abs(remain+b)%10<5) var song = ' utwory';
+                                else var song = ' utworów';
+                            }
+                            else var song = ' utworów';
+                            if(remain+b!==0){
+                                if(resvals.sel_type==0) var brav=' więcej o ';
+                                else if(resvals.sel_type==1) var brav=' do limitu ';
+                                else if(resvals.sel_type==2) var brav=' ';
+                            }
+                            else var brav=' ';
                             act_span.first().text(actual+a);
-                            //$('.walid span:eq(1)').text(remain+b);
+                            $('.walid span:eq(1) input').val(remain+b);
+                            var remainInput = $('.walid span:eq(1) input').clone();
+                            $('.walid span:eq(1)').text(Math.abs(remain+b)).append(remainInput);
+                            var remainNum = $('.walid span:eq(1)').clone();
                             //console.log(actual +'|'+ limit);
-                            if(actual+a < limit) {
+                            if(actual+a !== limit && resvals.sel_type==2) {
                                 $('.walid').addClass('flash');
                                 $('#submit').addClass('disabled').attr('disabled',true);
+                                if(actual+a < limit) $('.walid span:eq(1)').parent().text('Pozostało: ').append(remainNum).append(song);
+                                else if(actual+a > limit) $('.walid span:eq(1)').parent().text('Przekroczono o: ').append(remainNum).append(song);
+                                //$('.walid div:eq(2)').show();
+                                //$('.walid div:eq(3)').hide();
+                            }
+                            else if(actual+a > limit && resvals.sel_type==1) {
+                                $('.walid').addClass('flash');
+                                $('#submit').addClass('disabled').attr('disabled',true);
+                                if(actual+a < limit) $('.walid span:eq(1)').parent().text('Pozostało: ').append(remainNum).append(song);
+                                else if(actual+a > limit) $('.walid span:eq(1)').parent().text('Przekroczono o: ').append(remainNum).append(song);
+                                //$('.walid div:eq(2)').show();
+                                //$('.walid div:eq(3)').hide();
+                            }
+                            else if(actual+a < limit && resvals.sel_type==0) {
+                                $('.walid').addClass('flash');
+                                $('#submit').addClass('disabled').attr('disabled',true);
+                                if(actual+a < limit) $('.walid span:eq(1)').parent().text('Pozostało: ').append(remainNum).append(song);
+                                else if(actual+a > limit) $('.walid span:eq(1)').parent().text('Przekroczono o: ').append(remainNum).append(song);
                                 //$('.walid div:eq(2)').show();
                                 //$('.walid div:eq(3)').hide();
                             }
                             else {
                                 $('.walid').removeClass('flash');
                                 $('#submit').removeClass('disabled').attr('disabled',false);
+                                $('.walid span:eq(1)').parent().text('Brawo'+brav).append(remainNum).append(song);
                                // $('.walid div:eq(2)').hide();
                                // $('.walid div:eq(3)').show();
                             }

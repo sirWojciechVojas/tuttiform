@@ -38,6 +38,8 @@
     width: 80%;
    }
    .option{
+    padding: 0;margin: 0;
+    line-height: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -54,7 +56,7 @@
         font-size: 0.77em;
     }
     .content{
-        width: 85%;
+        width: 90%;
     }
     #submit{
         left: 200px;
@@ -64,6 +66,8 @@
    .tile{
         outline: 1px solid lightgrey;
         outline-offset: -2px;
+        min-height: 50px !important;
+        margin: 0 !important;
    }
    .flexBox{
     display: flex;
