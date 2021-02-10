@@ -61,7 +61,7 @@ class ResponseController extends Controller
                 $input_data = [
                     'question' => $field->question,
                     'value' => array_get($request->all(), $attribute),
-                    'rating' => array_get($request->all(), 'rating_'.$attribute),
+                    //'rating' => array_get($request->all(), 'rating_'.$attribute),
                     'required' => $field->required,
                     'options' => $field->options,
                     'template' => str_replace('-', '_', $field->template)
@@ -141,12 +141,12 @@ class ResponseController extends Controller
             foreach ($form_fields as $field) {
                 $attribute = str_replace('.', '_', $field->attribute);
                 $value = $request->input($attribute);
-                $rating = $request->input('rating_'.$attribute);
+                //$rating = $request->input('rating_'.$attribute);
 
                 $field_response = new FieldResponse([
                     'form_response_id' => $response->id,
                     'answer' => is_array($value) ? json_encode($value) : $value,
-                    'rating' => is_array($rating) ? json_encode($rating) : $rating
+                    //'rating' => is_array($rating) ? json_encode($rating) : $rating
                 ]);
 
                 $field->responses()->save($field_response);

@@ -1,5 +1,7 @@
 <?php
 
+use Dotenv\Dotenv;
+
 /*
 |--------------------------------------------------------------------------
 | Create The Application
@@ -42,6 +44,17 @@ $app->singleton(
 );
 
 /*
+|-----------------------------------------------
+| Load domain-specific .env file if it exists
+|-----------------------------------------------
+*/
+
+if($_SERVER['HTTP_HOST']=='localhost'){
+    $app->loadEnvironmentFrom('.env.local');
+}
+else $app->loadEnvironmentFrom('.env');
+
+/*
 |--------------------------------------------------------------------------
 | Return The Application
 |--------------------------------------------------------------------------
@@ -51,5 +64,6 @@ $app->singleton(
 | from the actual running of the application and sending responses.
 |
 */
+
 
 return $app;
