@@ -304,9 +304,9 @@
                 if (response.success) {
                     successCallback();
                 } else {
-                    //failedCallback(response.error);
-                    console.log(response.printed);
-                    document.write(response.printed);
+                    failedCallback(response.error);
+                    //console.log(response.printed);
+                    //document.write(response.printed);
                 }
             });
         }

@@ -220,7 +220,6 @@ class FormController extends Controller
 
             foreach ($form->fields as $field) {
                 $field->question = ucfirst(data_get($inputs, "{$field->attribute}.question"));
-                // $field->question = 'Dupa blada?';
                 $field->required = data_get($inputs, "{$field->attribute}.required") ? true : false;
                 $field->options = data_get($inputs, "{$field->attribute}.options");
                 // $field->options = data_get($inputs_, "{$field->attribute}.type");
