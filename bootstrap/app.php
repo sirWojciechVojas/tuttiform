@@ -48,8 +48,11 @@ $app->singleton(
 | Load domain-specific .env file if it exists
 |-----------------------------------------------
 */
+if(isset($_SERVER['HTTP_HOST']) && !empty($_SERVER['HTTP_HOST'])){
+    $domain = $_SERVER['HTTP_HOST'];
+}
 
-if($_SERVER['HTTP_HOST']=='localhost'){
+if($domain=='localhost'){
     $app->loadEnvironmentFrom('.env.local');
 }
 else $app->loadEnvironmentFrom('.env');

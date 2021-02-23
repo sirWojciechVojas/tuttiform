@@ -345,7 +345,7 @@
                 } else {
                     failedCallback(response.error);
                     //console.log(response.printed);
-                    //document.write(response.printed);
+                    document.write(response.printed);
                 }
             });
         }
