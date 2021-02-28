@@ -1,6 +1,46 @@
 <?php
 $now = \Moment::now();
 
+$required_email_sub_template = <<<SUB_TEMPLATE
+	<div class="panel template short-answer" id="" data-attribute-type="single">
+		<div class="panel-body mb-10">
+			<div class="form-group">
+				<div class="mb-10">
+					<input type="text" class="form-control input-xlg question-name" id="" name="" placeholder="Question" maxlength="255" minlength="3" required>
+				</div>
+				<input type="text" class="form-control" value="short answer" readonly>
+			</div>
+		</div>
+		<div class="panel-footer panel-footer-bordered">
+			<div class="heading-elements">
+				<span class="heading-text text-semibold">Short Answer Question Type</span>
+				<div class="pull-right">
+					<div class="heading-form">
+						<div class="form-group">
+							<label class="checkbox-inline checkbox-right checkbox-switchery switchery-sm">
+								<input type="checkbox" class="switchery question-required" name="" id="" checked="checked">
+								Required
+							</label>
+						</div>
+					</div>
+					<button type="button" class="btn bg-danger-400 btn-xs heading-btn question-delete" data-form="" data-form-field="">Delete</button>
+				</div>
+			</div>
+		</div>
+	</div>
+SUB_TEMPLATE;
+
+$required_email_main_template = <<<MAIN_TEMPLATE
+	<div class="row template short-answer">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label for="" class="label-xlg field-label"><span class="question">Short Answer Question:</span></label>
+				<input type="text" class="form-control" id="" name="" placeholder="Answer" value="" maxlength="255" minlength="3">
+			</div>
+		</div>
+	</div>
+MAIN_TEMPLATE;
+
 $short_answer_sub_template = <<<SUB_TEMPLATE
 	<div class="panel template short-answer" id="" data-attribute-type="single">
 		<div class="panel-body mb-10">
@@ -235,11 +275,12 @@ $checkboxes_main_template = <<<MAIN_TEMPLATE
 				<label for="" class="label-xlg field-label"><span class="question">Checkbox Question:</span></label>
                 <div class="options button checkboxes">
                     <div class="tile vcenter col-sm-12 col-md-6 col-lg-4 p-1">
-                        <div class="checkbox vcenter col-md-12">
+                        <div class="checkbox vcenter col-sm-11 col-md-11">
                             <label>
                                 <input type="checkbox" class="styled" name=""> <span class="option">Option 1</span>
                             </label>
                         </div>
+                        <div class="checkbox vcenter points-rating col-sm-1 col-md-1"><span>?</span></div>
                     </div>
 				</div>
 			</div>
@@ -533,6 +574,13 @@ $time_main_template = <<<MAIN_TEMPLATE
 MAIN_TEMPLATE;
 
 return [
+    [
+		'name' => 'Required Email',
+		'alias' => 'required-email',
+		'sub_template' => $required_email_sub_template,
+		'main_template' => $required_email_main_template,
+		'attribute_type' => 'string',
+	],
 	[
 		'name' => 'Short Answer',
 		'alias' => 'short-answer',

@@ -1,7 +1,38 @@
-#submit{
+#submit[type="button"]{
     position: fixed;
     bottom: 20px;
     z-index: 2;
+    margin-left: 2.5%;
+}
+.modal-dialog {
+    margin-top: 0;
+    margin-bottom: 0;
+    height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+
+  .modal.fade .modal-dialog {
+    -webkit-transform: translate(0, -100%);
+            transform: translate(0, -100%);
+  }
+  .modal.in .modal-dialog {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+  }
+.modal-body {
+    height: 80vh !important;  /*Sets the height to 80/100ths of the viewport.*/
 }
 .walid div:nth-of-type(3) {
     display: none;
@@ -29,6 +60,22 @@
 .vcenter {
     display: flex;
     align-items: center;
+}
+.points-rating{
+    margin:0 !important;padding:0 !important;
+    width: 4rem !important;
+    height: 4rem;
+    border-radius: 2rem;
+    display: block;
+    line-height: 4rem;
+    font-weight: bold;
+    background-color: greenyellow;
+    /* outline: 1px solid navy; */
+}
+.points-rating span{
+    display: inherit;
+    margin:0 !important;padding:0 !important;
+    text-align: center !important;
 }
 .content{
     border: 0px solid black;

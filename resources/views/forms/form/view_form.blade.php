@@ -61,19 +61,47 @@ $resvals = $form->resvals;
                                 @endforeach
                             @endif
                         </div>
+                        @php
+                            //$addAttr = ' data-toggle="modal" data-target="#exampleModal"';
+                            $btnName = ($view_type === 'form' && empty($only_att_resvals)) ? 'Submit Form' : 'Next';
+                            $addAttr = ($view_type === 'form' && empty($only_att_resvals)) ? null : ' data-toggle=modal data-target=#exampleModal';
+                        @endphp
 
                         <div class="text-left mt-20">
-                            <button id="submit" type="{{ ($view_type === 'form') ? 'submit' : 'button' }}" class="btn btn-primary disabled" disabled="true" data-loading-text="Please Wait..." data-complete-text="Submit Form">Submit Form</button>
+                            <button id="submit" type="{{ ($view_type === 'form' && empty($only_att_resvals)) ? 'submit' : 'button' }}" class="btn btn-primary disabled" disabled="true" data-loading-text="Please Wait..." data-complete-text="Submit Form"{{ $addAttr }}>{{ $btnName }}</button>
                         </div>
+
+
                     </form>
                 </div>
             @endif
     </div>
 </div>
 @endsection
+@section('modalBox')
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-center" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Submit Form</button>
+        </div>
+      </div>
+    </div>
+  </div>
+@endsection
 @section('walidator')
 <div class="row walid vcenter">
-    <div class="col-md-7">
+    <div class="col-md-9">
         <div>Zaznaczono: <span>0</span> utworów</div>
         <div>Pozostało: <span>{{ $formatted_resvals[$resval->form_field_id]['field_limit'] }}<input type="hidden" value="{{ $formatted_resvals[$resval->form_field_id]['field_limit'] }}"/></span> utworów</div>
         <div>Warunek spełniony</div>

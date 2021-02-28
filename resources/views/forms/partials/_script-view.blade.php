@@ -16,6 +16,8 @@
             radioClass: 'choice'
         });
 
+        //$('.checkboxes .options').sortable({revert: true});
+
         // $('.bootstrap-select').selectpicker();
         $('select.select').select2({
             minimumResultsForSearch: Infinity
@@ -50,16 +52,25 @@
 
         $('#user-form').validate({
             submitHandler: function (form) {
-                saveResponse(form, function () {
+                nextStep(form, function(){
                     var $panel = $(form).closest('.panel-body');
-                    var response = 'Your responses have been submitted successfully.';
+                    var response = 'Co jest grane drogi panie?';
                     var paragraph = $('p').addClass('content-group').text(response);
 
                     $panel.empty();
                     $panel.append(paragraph);
-                }, function (error_message) {
-                    notify('error', 'Error occured: ' + error_message);
                 });
+                //saveResponse(form, function () {
+
+                    //var $panel = $(form).closest('.panel-body');
+                    //var response = 'Your responses have been submitted successfully.';
+                    //var paragraph = $('p').addClass('content-group').text(response);
+
+                    //$panel.empty();
+                    //$panel.append(paragraph);
+                //}, function (error_message) {
+                    //notify('error', 'Error occured: ' + error_message);
+                //});
                 return false;
             }
         });
@@ -121,9 +132,10 @@
                     if (options_div.hasClass('button')) {
                         var type = options_div.hasClass('checkboxes') ? 'checkbox' : 'radio';
                         var sample_button = options_div.find('div.' + type).parent().clone();
-                        //var sample_star = options_div.find('div.post').clone();
-                        options_div.find('div.post').empty();
+                        var sample_rating = options_div.find('div.points-rating').clone();
+                        options_div.find('div.points-rating').empty();
                         options_div.empty();
+
                         /*
                         var all_options='<option value="" class="option"></option>';
                         for(v=1;v<=10;v++){
@@ -324,11 +336,20 @@
             });
         }
 
+        function nextStep(form, successCallback, failedCallback) {
+            var $form = $(form);
+            submit_button = $form.find('#submit');
+            submit_button.button('loading');
+
+            alert($form.attr('action'));
+
+        }
         function saveResponse(form, successCallback, failedCallback) {
             var $form = $(form);
 
             submit_button = $form.find('#submit');
             submit_button.button('loading');
+            //alert('ppppp');
 
             $.ajax({
                 url: $form.attr('action'),

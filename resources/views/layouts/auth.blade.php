@@ -61,6 +61,7 @@
 
     </div>
 
+    @yield('modalBox')
     @yield('walidator')
 
     <!-- Core JS files -->

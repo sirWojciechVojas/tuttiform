@@ -245,16 +245,16 @@ class FormController extends Controller
             ($form->status === Form::STATUS_DRAFT) and $form->status = Form::STATUS_PENDING;
             $form->save();
 
-            // return response()->json([
-            //     'success' => true,
-            // ]);
-
             return response()->json([
-                'success' => false,
-                'error_message' => 'validation_failed',
-                // 'error' =>  'Invalid request made. Please refresh the page'
-                'printed' =>  env('DB_HOST_WRITE')
+                'success' => true,
             ]);
+
+            // return response()->json([
+            //     'success' => false,
+            //     'error_message' => 'validation_failed',
+            //     // 'error' =>  'Invalid request made. Please refresh the page'
+            //     'printed' =>  env('DB_HOST_WRITE')
+            // ]);
         }
     }
 
