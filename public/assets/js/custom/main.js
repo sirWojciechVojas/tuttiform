@@ -55,7 +55,7 @@ $(function() {
 
 	$(document).on('click', 'a[href]', function (e) {
 		var method = $(this).data('method');
-        alert('COOOO');
+
 		if (method) {
 			$initiator = $(this);
 			e.preventDefault();
@@ -93,7 +93,7 @@ $(function() {
 			var form_action_class = (ajax_enabled == true) ? 'action-by-ajax' : 'action-default';
 			$form.addClass(form_action_class);
 
-            //$form.trigger('submit');
+            $form.trigger('submit');
 		}
 	});
 
