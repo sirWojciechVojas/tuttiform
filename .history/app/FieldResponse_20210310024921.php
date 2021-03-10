@@ -27,7 +27,7 @@ class FieldResponse extends Model
             case 'rating_short-answer':
                 return clean($this->rating);
             case 'checkboxes':
-                return e(implode('| ', json_decode($this->answer)));
+                return e(implode('; ', json_decode($this->answer)));
             case 'rating_checkboxes':
                 return e(implode(', ', json_decode($this->rating)));
             case 'linear-scale':

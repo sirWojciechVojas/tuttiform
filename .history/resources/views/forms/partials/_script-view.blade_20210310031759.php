@@ -25,7 +25,6 @@
 
         $('#exampleModal').on('show.bs.modal', function(){
             $('#exampleModalLabel').text('Przyznaj punkty - przeciągnij i upuść (pamiętaj, żeby podać maila)');
-            $('#user-form .checker span.checked input[type="hidden"]').remove();
             var userForm = $('#user-form').clone();
             var tiles = userForm.find('li.tile div.checkbox div.checker > span.checked').closest('li.tile').clone();
             var ile = tiles.length;
@@ -35,11 +34,12 @@
             });
 
             //var formFields = userForm.find('.form-fields');
+            $('#user-form .checker span.checked input[type="hidden"]').remove();
             $(this).find('.modal-body #sortable').html(tiles.removeClass('col-md-6 col-lg-4'));
             var mContent = $(this).find('.modal-content');
 
             mContent.html('<form id="form-super">'+mContent.html()+'</form>');
-            $orderedInputs = $('#sortable .checker span.checked input');
+            $orderedInputs = $('#sortable .checker span.checked input[type="checkbox"]');
             $orderedRating = $('#sortable .points-rating span');
 
             $('.modal-body #sortable').sortable({
@@ -58,7 +58,7 @@
                 stop: function( event, ui ) {
                     $(this).find('.points-rating span:not(".glyphicon")').each(function(index){
                         $(this).text(ile-index+' pkt');
-                        $orderedInputs = $('#sortable .checker span.checked input');
+                        $orderedInputs = $('#sortable .checker span.checked input[type="checkbox"]');
                         $orderedRating = $('#sortable .points-rating span');
                         //alert(ile-index);
                     });
@@ -69,7 +69,7 @@
                 $('#user-form .checker span.checked input').each(function(index){
                     //alert(parseInt($orderedRating.eq(index).text()));
                     $(this).after('<input type="hidden" name="rating_'+$(this).attr('name')+'" value="'+parseInt($orderedRating.eq(index).text())+'">');
-                    $(this).val($orderedInputs.eq(index).val());
+                    $(this).val($orderedInputs.val());
 
                 });
                 $(this).prev().click();

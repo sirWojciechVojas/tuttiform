@@ -35,7 +35,7 @@
                             } else {
                                 $value = $data['answer'];
                                 if($data['rating']!==''){
-                                    $answer = explode('|',$value);
+                                    $answer = explode(',',$value);
                                     $rating = explode(',', $data['rating']);
                                 }
                                 else $answer=$rating=null;

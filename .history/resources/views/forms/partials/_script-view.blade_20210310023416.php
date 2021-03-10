@@ -24,8 +24,7 @@
         });
 
         $('#exampleModal').on('show.bs.modal', function(){
-            $('#exampleModalLabel').text('Przyznaj punkty - przeciągnij i upuść (pamiętaj, żeby podać maila)');
-            $('#user-form .checker span.checked input[type="hidden"]').remove();
+            $('#exampleModalLabel').text('Przyznaj punkty - przeciągnij i upuść');
             var userForm = $('#user-form').clone();
             var tiles = userForm.find('li.tile div.checkbox div.checker > span.checked').closest('li.tile').clone();
             var ile = tiles.length;
@@ -35,6 +34,7 @@
             });
 
             //var formFields = userForm.find('.form-fields');
+            $('#user-form .checker span.checked input[type="hidden"]').remove();
             $(this).find('.modal-body #sortable').html(tiles.removeClass('col-md-6 col-lg-4'));
             var mContent = $(this).find('.modal-content');
 

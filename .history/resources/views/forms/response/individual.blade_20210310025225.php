@@ -48,7 +48,7 @@
                         @foreach ($answer as $elKey => $element)
                     <div class="form-control-static form-underline pb-5">
                         <span>{!! $element !!}</span>
-                        <b>- {!! $rating[$elKey] !!} pkt.</b>
+                        <b>- {!! $elKey !!} pkt.</b>
                     </div>
                       @endforeach
                     @else

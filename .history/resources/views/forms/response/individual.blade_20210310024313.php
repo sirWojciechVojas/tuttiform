@@ -35,7 +35,7 @@
                             } else {
                                 $value = $data['answer'];
                                 if($data['rating']!==''){
-                                    $answer = explode('|',$value);
+                                    $answer = explode(',',$value);
                                     $rating = explode(',', $data['rating']);
                                 }
                                 else $answer=$rating=null;
@@ -48,7 +48,7 @@
                         @foreach ($answer as $elKey => $element)
                     <div class="form-control-static form-underline pb-5">
                         <span>{!! $element !!}</span>
-                        <b>- {!! $rating[$elKey] !!} pkt.</b>
+                        <b>- {!! $elKey !!} pkt.</b>
                     </div>
                       @endforeach
                     @else
