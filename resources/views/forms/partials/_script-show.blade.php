@@ -7,6 +7,21 @@
         // Form questions
         var $questions = $('form .questions');
 
+        $('#create-form .questions .form-group .input-group').on('paste', 'input[type="text"]', function (e) {
+            var myPasteData=handlePaste(e.originalEvent);
+            $this=$(this);
+            var max = myPasteData.length-1;
+            //alert(max);
+            $.each(myPasteData,function(key, value){
+                if(key==0) $this.val(value);
+                else if(key>=max) return;
+                else {
+                    $this.closest('.panel-body').find('div.options-wrapper .hidden input').val(value);
+                    $this.next().find('.btn').trigger('click');
+                }
+                //alert(value);
+            });
+        });
         // Moje selecty dodane
         mySelect();
 
@@ -147,7 +162,7 @@
             var add_option_buttons = $('button.add-option');
             add_option_buttons.each(function (index) {
                 var $add_option_button = $(this);
-                var max_option_count = 20;
+                var max_option_count = 512;
 
                 $add_option_button.on('click', function (event) {
                     event.preventDefault();
@@ -435,5 +450,22 @@
             layout: 'top',
             buttons: false
         });
+    }
+    function handlePaste(e) {
+        var clipboardData, pastedData;
+
+        // Stop data actually being pasted into div
+        e.stopPropagation();
+        e.preventDefault();
+
+        // Get pasted data via clipboard API
+        clipboardData = e.clipboardData || window.clipboardData;
+        console.log(clipboardData)
+        //pastedData = clipboardData.getData('Text');
+        pastedData = clipboardData.getData('text').split("\n");
+
+        // Do whatever with pasteddata
+        //alert(pastedData);
+        return pastedData;
     }
 </script>
