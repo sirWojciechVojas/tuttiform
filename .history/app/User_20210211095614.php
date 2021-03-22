@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Illuminate\Support\Facades\Mail;
+use Mail;
 use App\Mail\EmailVerificationMail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
